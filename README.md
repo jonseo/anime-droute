@@ -17,4 +17,4 @@ Inside of your Astro project, you'll see the following folders and files:
 └── package.json
 ```
 
-Rework of Rebel Chris w Astro getStaticPaths & dynamic routing/pagination.
+Tinkering w this from Rebel Chris - Astro getStaticPaths & dynamic routing/pagination.
