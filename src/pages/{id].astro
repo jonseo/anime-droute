@@ -44,10 +44,10 @@ export async function getStaticPaths() {
   <body>
     <div class="container">
         <a href="/">&larr; Go back</a>
-        <h1>{collection.params?.name}</h1>
+        <h1>{id.params?.name}</h1>
         <p>These are all episodes for this show:</p>
         <ul class="list">
-            {collection.data[0]?.episodes.map((item) => <li>{item.attributes.number} - {item.attributes.canonicalTitle}</li>)}
+            {id.data[0]?.id.map((item) => <li>{item.s.r} - {item.s.canonicalTitle}</li>)}
         </ul>
      </div>
   </body>
