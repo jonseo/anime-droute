@@ -1,26 +1,21 @@
 ---
 const { collection } = Astro.props;
 
-export async function getStaticpaths(paginate) {
-  const remoteData = await fetch('https://kitsu.io/api/edge/anime?sort=-averageRating')
-  const remoteJson = await remoteData.json();
-  const allData = remoteJson.data;
-  
-  return {
-    routes: allData.map((show, i) => {
-      const params = {name: show.attributes.canonicalTitle, index: show.id};
-      return params;
-    }),
-    permalink: ({ params }) => `/show/${params.index}`, 
-    async data({ params }) {
-      const show = allData.filter(show => show.id == params.index);
-      const episodes = await fetch(`https://kitsu.io/api/edge/episodes?filter[mediaId]=${params.index}}`).then(response => response.json());
-      show[0] = {...show[0], ...{episodes: episodes.data}};
-	    return show;
-    },
-    pageSize: Infinity,
-  }
+// src/pages/posts/[id].astro
+// Tell Astro what pages to build for your route "/pages/:id"
+export async function getStaticPaths() {
+  // Lets fetch posts from CSS Tricks' Headless CMS:
+  const CSS_TRICKS_CMS = 'https://css-tricks.com/wp-json/wp/v2/posts';
+  const allPosts = await fetch(CSS_TRICKS_CMS).then(r => r.json());
+  // Then, create a new page from every post:
+  return allPosts.map((post) => ({
+    // Set the URL param ":id" in the page URL
+    params: {id: post.id},
+    // Pass the post object as a prop to the page
+    props: {post},
+  }));
 }
+
 ---
 <html lang="en">
   <head>
